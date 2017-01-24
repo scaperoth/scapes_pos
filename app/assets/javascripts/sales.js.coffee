@@ -80,8 +80,13 @@ jQuery ->
             $('#sale-amount-paid-field').on 'keyup', (event) ->
                 $('#sale-amount-paid-field').change()
                 
-            # add a new field right off the bat            
-            add_field $('form .add_fields')
+            if !$('.sale_sale_details_price').length 
+              # add a new field right off the bat            
+              add_field $('form .add_fields')
+            else
+              field_focus()
+              $('select').material_select();
+              update_form_total()
 
 
 

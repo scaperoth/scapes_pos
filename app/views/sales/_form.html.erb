@@ -1,14 +1,21 @@
 <%= simple_form_for [current_team, active_event, @sale] do |f| %>
 <%= f.error_notification %>
+<% if @sale.errors.present? %>
+  <% @sale.errors.messages.each do |name, msg| %>
+  <div id="error-<%=name%>" class="error_notification"><%= msg.first.to_s %></div>
+  <% end %>
+<% end %> 
 
 <div class="col s12 m6">
     <div class="input-field">
-        <%= f.input :customer %>
+      <%= f.simple_fields_for :customer do |customer_fields| %>
+      <%= customer_fields.input :name %>
+      <% end %>
     </div>
 </div>
 
 <div class="col s12">
-    <%= f.fields_for :sale_details do |builder| %>
+    <%= f.simple_fields_for :sale_details do |builder| %>
     <%= render 'sale_detail_fields', f: builder %>
     <% end %>
     <%= link_to_add_fields "Add Item", f, :sale_details %>

@@ -1,6 +1,11 @@
 class SaleDetail < ActiveRecord::Base
-    belongs_to :sale
-    belongs_to :product
+    belongs_to :sale, inverse_of: :sale_details
+    belongs_to :product, inverse_of: :sale_details
+    
+    validates_presence_of :sale
+    validates_presence_of :product
+    
+    accepts_nested_attributes_for :product
     
     before_save :set_total
     

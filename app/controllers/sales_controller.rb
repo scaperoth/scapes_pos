@@ -83,7 +83,7 @@ class SalesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sale_params
-        form_params = params.require(:sale).permit(:customer, :amount_paid, :change, sale_details_attributes: [:id, :quantity, :total, :_destroy, :price, product: [:sku]])
+        form_params = params.require(:sale).permit(:customer, :amount_paid, :change, sale_details_attributes: [:id, :quantity, :total, :_destroy, :price, product_attributes: [:sku]])
 
         if form_params[:sale_details_attributes].present?
             # here we will create a product if we need to because
@@ -92,8 +92,8 @@ class SalesController < ApplicationController
             # custom prices that are for one-time use so they are
             # a part of the sale detail model.
             form_params[:sale_details_attributes].each do |k, v|
-                # get the product information from the form
-                product = v[:product]
+                # get the product information from the form 
+                product = v[:product_attributes]
                 product[:price] = form_params[:sale_details_attributes]
 
                 # delete the product from the sale_detail
@@ -113,7 +113,7 @@ class SalesController < ApplicationController
         # set the customer from the name given or creat it if it's new
         form_params[:customer] = Customer.find_or_create_by(name: form_params[:customer])
 
-        # finally, grab the current event
+        # finally, grab the current event and team
         form_params[:event] = active_event
 
         # return the params
