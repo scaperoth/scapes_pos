@@ -26,9 +26,10 @@ class CategoriesController < ApplicationController
   # POST /categories.json
   def create
     @category = Category.new(category_params)
-
+    
     respond_to do |format|
       if @category.save
+        set_product_category @category
         format.html { redirect_to team_categories_path, notice: 'Category was successfully created.' }
         format.json { render :show, status: :created, location: team_categories_path }
       else
@@ -43,6 +44,7 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
+        set_product_category @category  
         format.html { redirect_to team_categories_path, notice: 'Category was successfully updated.' }
         format.json { render :show, status: :ok, location: team_categories_path }
       else
@@ -68,10 +70,15 @@ class CategoriesController < ApplicationController
       @category = Category.find_by(id: params[:id], team_id: current_team)
     end
     
+    def set_product_category(category)
+      abort
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
       form_params = params.require(:category).permit(:name, :price)
       form_params[:team_id] = current_team.id
+      form_params[:regex] = params[:regex]
       form_params
     end
 end
