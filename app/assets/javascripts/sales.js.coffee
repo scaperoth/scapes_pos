@@ -1,11 +1,10 @@
-cd # Place all the behaviors and hooks related to the matching controller here.
+# Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 jQuery ->
     $(document).on 'turbolinks:load', ->
-        if $('#new_sale').length > 0 
-
+        if $('#new_sale, .edit_sale').length > 0 
             bind_sku_field = (elem) -> 
                 $(elem).on 'focusout', (event) ->
                     elem = $(this)
@@ -20,7 +19,7 @@ jQuery ->
                         success: (data, textStatus, jqXHR) ->
                             if data != null
                                 new_item_price = parseFloat(data.price)
-                                elem.closest('fieldset').find('.sale_sale_details_price input').val(new_item_price)
+                                elem.closest('fieldset').find('.sale_sale_details_price input').val(new_item_price.toFixed(2))
                                 update_form_total()
 
             bind_price_and_qty_fields = ->

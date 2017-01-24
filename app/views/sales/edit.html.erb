@@ -1,5 +1,92 @@
 <h1>Editing sale</h1>
 
-<%= render 'form' %>
-<%= link_to 'Show', @sale %> |
-<%= link_to 'Back', team_sales_path %>
+<div class="row ">
+    <div class="section">
+        <%= simple_form_for [current_team, active_event, @sale] do |f| %>
+        <%= f.error_notification %>
+
+        <div class="col s12 m6">
+            <div class="col s12 m6">
+                <div class="input-field">
+                    <%= f.fields_for :customer do |customer_fields| %>
+                    <%= customer_fields.input :name, label: "Customer Name" %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12">
+            <div class="col s12 m6">
+                <div class="input-field">
+                    <%= f.input :amount_paid %>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12">
+            <div class="actions">
+                <div class="input-field" class="left">
+                    <%= f.button :submit, 'Submit', data: {confirm: 'Update Sale?'} %>
+                    <%= link_to 'Cancel', team_event_sales_path, class: 'btn red lighten-2 right'%>
+                </div>
+            </div>
+        </div>
+
+        <% end %>
+    </div>
+</div>
+</br>
+<div class="divider"></div>
+<div class="row">
+    <div class="section">
+        <p class="flow-text">Customer:
+            <%= @sale.customer.name %>
+        </p>
+        <p class="flow-text">Event:
+            <%= @sale.event.name %>
+        </p>
+        <p class="flow-text">Total:
+            <%= number_to_currency @sale.total %>
+        </p>
+        <p class="flow-text">Amount Paid:
+            <%= number_to_currency @sale.amount_paid %></p>
+        <p class="flow-text">Change:
+            <%= number_to_currency @sale.change %>
+        </p>
+        <p class="flow-text">Date:
+            <%= @sale.created_at.strftime("%a, %b #{@sale.created_at.day.ordinalize}, %Y %l:%M %P") %>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div class="section">
+        <table>
+            <thead>
+                <tr>
+                    <th data-field="sku">SKU</th>
+                    <th data-field="sku">DESCRIPTION</th>
+                    <th data-field="price">SALE PRICE</th>
+                    <th data-field="product_price">PRODUCT PRICE</th>
+                    <th data-field="quantity">QTY</th>
+                    <th data-field="total">ITEM TOTAL</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% @sale_details.each do |sd| %>
+                <tr>
+                    <td><%= sd.product.sku %></td>
+                    <td><%= sd.product.description %></td>
+                    <td><%= number_to_currency sd.price %></td>
+                    <td><%= number_to_currency sd.product.price %></td>
+                    <td><%= sd.quantity %></td>
+                    <td><%= number_to_currency sd.total %></td>
+
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+</div>

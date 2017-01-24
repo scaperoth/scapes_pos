@@ -9,14 +9,15 @@
 
 <div class="col s12">
     <%= f.fields_for :sale_details do |builder| %>
-    <%= render 'sale_details_fields', f: builder %>
+    <%= render 'sale_detail_fields', f: builder %>
     <% end %>
     <%= link_to_add_fields "Add Item", f, :sale_details %>
 </div>
 
 <div class="col s12">
     <p class="flow-text">
-        <b>Total:</b>&nbsp;$<span id="sale-total">0.00</span>
+        <b>Total:</b>&nbsp;$<span id="sale-total">0.00 </span>
+        <%= f.hidden_field :total, id: 'sale-total-field', value: "0.00" %>
     </p>
 </div>
 <br/>
@@ -28,9 +29,9 @@
 
 <div class="col s12">
     <p class="flow-text">
-        <b>Change:</b>&nbsp;<span id="sale-change-text-container">$<span id="sale-change-text">0.00</span></span>
+        <b>Change:</b>&nbsp;<span id="sale-change-text-container">$<span id="sale-change-text"><%= @sale.change %> </span></span>
     </p>
-        <%= f.hidden_field :change, id: 'sale-change-field', value: 0.0 %>
+        <%= f.hidden_field :change, id: 'sale-change-field', value: "0.00" %>
 </div>
 
 <div class="col s12">

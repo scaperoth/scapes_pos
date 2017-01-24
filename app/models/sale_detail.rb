@@ -1,7 +1,7 @@
 class SaleDetail < ActiveRecord::Base
     belongs_to :sale
     belongs_to :product
-
+    
     before_save :set_total
     
     def set_total
