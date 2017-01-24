@@ -1,5 +1,14 @@
 <h1>Listing products</h1>
 
+<div class="col s12 m4">
+<%= form_tag request.path, :method => 'get' do %>
+  <%= content_tag :label do %>
+    Search term:
+    <%= text_field_tag :search, params[:search] %>
+  <% end %>
+<% end %>
+</div>
+
 <table class="responsive no-wrap">
     <thead>
         <tr>
@@ -17,7 +26,7 @@
             <td><%= product.sku %></td>
             <td><%= product.description %></td>
             <td><%= number_to_currency product.price %></td>
-            <td><%= product.category.present? ? product.category : 'N/A' %></td>
+            <td><%= product.category.present? ? product.category.name : 'N/A' %></td>
             <td><%= render partial: 'elements/form_buttons', locals: {model: product} %></td>
         </tr>
         <% end %>

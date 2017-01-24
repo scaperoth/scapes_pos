@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         resources :events do
           resources :sales
         end
+        resources :sale_details
         resources :categories
         resources :team_members
         get 'products/search/(:sku)' => 'products#search_by_sku', as: :sku_search

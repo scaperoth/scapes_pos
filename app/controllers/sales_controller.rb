@@ -1,6 +1,6 @@
 class SalesController < ApplicationController
-    include EventsHelper 
-    
+    include EventsHelper
+
     before_filter :authenticate_team!
 
     before_action :set_event
@@ -26,6 +26,7 @@ class SalesController < ApplicationController
 
     # GET /sales/1/edit
     def edit
+        @sale_details = SaleDetail.where(sale: @sale)
     end
 
     # POST /sales
@@ -50,7 +51,7 @@ class SalesController < ApplicationController
     def update
         respond_to do |format|
             if @sale.update(sale_params)
-                format.html { redirect_to @sale, notice: 'Sale was successfully updated.' }
+                format.html { redirect_to team_event_sale_url(@sale.event, @sale), notice: 'Sale was successfully updated.' }
                 format.json { render :show, status: :ok, location: @sale }
             else
                 format.html { render :edit }
@@ -83,38 +84,39 @@ class SalesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def sale_params
         form_params = params.require(:sale).permit(:customer, :amount_paid, :change, sale_details_attributes: [:id, :quantity, :total, :_destroy, :price, product: [:sku]])
-        
-        # here we will create a product if we need to because 
-        # we want the user to be able to, on-the-fly, create their
-        # own products. Also, we want the ability to create 
-        # custom prices that are for one-time use so they are 
-        # a part of the sale detail model. 
-        form_params[:sale_details_attributes].each do |k, v| 
-            # get the product information from the form
-            product = v[:product]
-            product[:price] = form_params[:sale_details_attributes]
-            
-            # delete the product from the sale_detail
-            form_params[:sale_details_attributes][k].delete :product
 
-            # add the product information to the product attributes param
-            new_product = Product.find_or_create_by(sku: product[:sku], team: current_team)
-            
-            # if the price is nil, let's use the user input
-            new_product.price = product[:price] if new_product.price.nil? 
-            new_product.save # save changes 
-            
-            # add a product reference for the new/existing product we got 
-            form_params[:sale_details_attributes][k][:product_id] = new_product.id
-        end
+        if form_params[:sale_details_attributes].present?
+            # here we will create a product if we need to because
+            # we want the user to be able to, on-the-fly, create their
+            # own products. Also, we want the ability to create
+            # custom prices that are for one-time use so they are
+            # a part of the sale detail model.
+            form_params[:sale_details_attributes].each do |k, v|
+                # get the product information from the form
+                product = v[:product]
+                product[:price] = form_params[:sale_details_attributes]
+
+                # delete the product from the sale_detail
+                form_params[:sale_details_attributes][k].delete :product
+
+                # add the product information to the product attributes param
+                new_product = Product.find_or_create_by(sku: product[:sku], team: current_team)
+
+                # if the price is nil, let's use the user input
+                new_product.price = product[:price] if new_product.price.nil?
+                new_product.save # save changes
+
+                # add a product reference for the new/existing product we got
+                form_params[:sale_details_attributes][k][:product_id] = new_product.id
+            end
+      end
         # set the customer from the name given or creat it if it's new
         form_params[:customer] = Customer.find_or_create_by(name: form_params[:customer])
-        
-        # finally, grab the current event 
+
+        # finally, grab the current event
         form_params[:event] = active_event
-        
+
         # return the params
         form_params
     end
 end
-

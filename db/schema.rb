@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20170124152850) do
   end
 
   create_table "customers", force: true do |t|
-    t.text     "name",       default: "Anonymous"
+    t.string   "name",       default: "Anonymous"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

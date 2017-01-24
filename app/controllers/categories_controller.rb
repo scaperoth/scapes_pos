@@ -26,7 +26,6 @@ class CategoriesController < ApplicationController
   # POST /categories.json
   def create
     @category = Category.new(category_params)
-    
     respond_to do |format|
       if @category.save
         set_product_category @category
@@ -44,6 +43,7 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
+        remove_product_category @category
         set_product_category @category  
         format.html { redirect_to team_categories_path, notice: 'Category was successfully updated.' }
         format.json { render :show, status: :ok, location: team_categories_path }
@@ -57,6 +57,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
+    remove_product_category @category
     @category.destroy
     respond_to do |format|
       format.html { redirect_to team_categories_url, notice: 'Category was successfully destroyed.' }
@@ -71,14 +72,34 @@ class CategoriesController < ApplicationController
     end
     
     def set_product_category(category)
-      abort
+      search = category.search_term.split(',')
+      condition_string = ''
+      condition_vars = Hash.new
+      search.each do |s|
+        s.strip!
+        condition_string += " or " if condition_string.present?
+        condition_string += "lower(description) LIKE :"+s
+        condition_vars[s.to_sym] = "%#{s.downcase}%"
+      end
+      
+      products = Product.where(team: current_team).where(condition_string, condition_vars)
+      
+      add_product_category products, category
+    end
+    
+    def add_product_category(products, category)
+      products.update_all category_id: category
+    end
+    
+    def remove_product_category(category)
+      products = Product.where(team: current_team).where(category_id: category)
+      products.update_all category_id: nil
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      form_params = params.require(:category).permit(:name, :price)
+      form_params = params.require(:category).permit(:name, :price, :search_term)
       form_params[:team_id] = current_team.id
-      form_params[:regex] = params[:regex]
       form_params
     end
 end

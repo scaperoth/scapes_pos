@@ -1,4 +1,6 @@
 class Category < ActiveRecord::Base
-  has_one :team
+  belongs_to :team
   has_many :products
+  
+  validates :name, uniqueness: { scope: :team }
 end

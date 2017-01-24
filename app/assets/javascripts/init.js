@@ -52,8 +52,15 @@ ready = function() {
 
         // Select boxes
         $('select').material_select();
-
+        
+        // initialize labels
+        $('input').each(function(){
+          if($(this).val().length>0){
+            console.log()
+            $('label[for='+$(this).attr('id')+']').addClass('active')
+          }
+        })
+        
     }
 }
-$(document).ready(ready);
-$(document).on('turbolinks:load', ready);
+$(document).on('ready turbolinks:load', ready);

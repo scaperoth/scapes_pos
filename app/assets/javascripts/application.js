@@ -49,3 +49,4 @@ $.rails.showConfirmationDialog = function(link) {
             $.rails.confirmed(link);  
         });
 }
+
