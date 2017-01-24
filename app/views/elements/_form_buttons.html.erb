@@ -1,0 +1,18 @@
+<% model ||= nil %>
+<% only_destroy ||= false %>
+
+<% if model.present? %>
+  <% model_name = model.class.to_s.underscore %>
+
+  <% if !only_destroy %>
+    <%= link_to   send("team_#{model_name}_path",  *[model.id]) do%>
+    <i class="material-icons left">remove_red_eye</i>
+    <% end %>
+    <%= link_to  send("edit_team_#{model_name}_path", *[model.id]) do%>
+    <i class="material-icons left orange-text">edit</i>
+    <% end %>
+  <% end %>
+  <%= link_to  send("team_#{model_name}_path", *[model.id]), method: :delete, data: { confirm: 'Are you sure?' } do%>
+  <i class="material-icons left red-text">delete</i>
+  <% end %>
+<% end %>

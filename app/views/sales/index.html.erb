@@ -1,0 +1,58 @@
+<h1>Listing sales</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>EVENT</th>
+            <th>CASHIER</th>
+            <th>CUSTOMER</th>
+            <th>AMOUNT PAID</th>
+            <th>CHANGE</th>
+            <th>TOTAL</th>
+            <th>DATE TIME</th>
+            <th>ACTIONS</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @sales.each do |sale| %>
+        <tr>
+            <td>
+                <%= sale.event.name %>
+            </td>
+            <td>
+                <%= sale.user.username %>
+            </td>
+            <td>
+                <%= sale.customer.name %>
+            </td>
+            <td>
+                <%= number_to_currency sale.amount_paid %>
+            </td>
+            <td>
+                <%= number_to_currency sale.change %>
+            </td>
+            <td>
+                <%= number_to_currency sale.total %>
+            </td>
+            <td>
+                <%= sale.created_at.strftime("%a, %b #{sale.created_at.day.ordinalize}, %Y %l:%M %P") %>
+            </td>
+            <td>
+                <%= link_to  team_event_sale_path(active_event, sale) do%>
+                <i class="material-icons left">remove_red_eye</i>
+                <% end %>
+                <%= link_to edit_team_event_sale_path(active_event,sale) do%>
+                <i class="material-icons left orange-text">edit</i>
+                <% end %>
+                <%= link_to team_event_sale_path(active_event, sale), method: :delete, data: { confirm: 'Are you sure?' } do%>
+                <i class="material-icons left red-text">delete</i>
+                <% end %>
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sale', new_team_event_sale_path %>

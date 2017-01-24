@@ -1,0 +1,45 @@
+<%= simple_form_for [current_team, active_event, @sale] do |f| %>
+<%= f.error_notification %>
+
+<div class="col s12 m6">
+    <div class="input-field">
+        <%= f.input :customer %>
+    </div>
+</div>
+
+<div class="col s12">
+    <%= f.fields_for :sale_details do |builder| %>
+    <%= render 'sale_details_fields', f: builder %>
+    <% end %>
+    <%= link_to_add_fields "Add Item", f, :sale_details %>
+</div>
+
+<div class="col s12">
+    <p class="flow-text">
+        <b>Total:</b>&nbsp;$<span id="sale-total">0.00</span>
+    </p>
+</div>
+<br/>
+<div class="col s12" style="margin-top:20px;">
+    <div class="col s12 m3 padding-remove-left">
+            <%= f.input :amount_paid, input_html: {id: 'sale-amount-paid-field', value: "0.00"} %>
+    </div>
+</div>
+
+<div class="col s12">
+    <p class="flow-text">
+        <b>Change:</b>&nbsp;<span id="sale-change-text-container">$<span id="sale-change-text">0.00</span></span>
+    </p>
+        <%= f.hidden_field :change, id: 'sale-change-field', value: 0.0 %>
+</div>
+
+<div class="col s12">
+    <div class="actions">
+        <div class="input-field" class="left">
+            <%= f.button :submit, 'Submit', data: {confirm: 'Complete the sale?'} %>
+            <%= link_to 'Cancel', team_event_sales_path, class: 'btn red lighten-2 right'%>
+        </div>
+    </div>
+</div>
+
+<% end %>

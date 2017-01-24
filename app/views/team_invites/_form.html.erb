@@ -1,0 +1,12 @@
+<%= simple_form_for [current_team, @team_invite] do |f| %>
+  <%= f.error_notification %>
+  
+  <div class="input-field">
+    <%= f.input :recipient, input_html: {class: 'autocomplete', data: {url: non_team_members }}  %>
+  </div>
+  
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
+  

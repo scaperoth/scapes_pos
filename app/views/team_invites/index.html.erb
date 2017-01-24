@@ -1,0 +1,25 @@
+<p class="flow-text">Current Invitations: Waiting for Reply</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>USERNAME</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @team_invites.each do |team_invite| %>
+        <tr>
+            <td><%= team_invite.recipient.username %>
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+            </td>
+
+            <td><%= render partial: 'elements/form_buttons', locals: {model: team_invite, only_destroy: true} %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

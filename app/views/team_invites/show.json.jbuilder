@@ -1,0 +1,1 @@
+json.partial! "team_invites/team_invite", team_invite: @team_invite

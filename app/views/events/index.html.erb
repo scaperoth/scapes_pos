@@ -1,0 +1,25 @@
+<h1>Listing events</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th >NAME</th>
+      <th >ACTIVE</th>
+      <th ></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td> <%= event.name %> </td>
+          <td> <%= event.active ? '<i class="material-icons left green-text">check</i>'.html_safe : '<i class="material-icons left grey-text">close</i>'.html_safe %> </td>
+        <td><%= render partial: 'elements/form_buttons', locals: {model: event} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Event', new_team_event_path %>

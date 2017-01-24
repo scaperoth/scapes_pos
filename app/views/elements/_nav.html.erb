@@ -1,0 +1,101 @@
+<nav class="custom-blue" role="navigation">
+    <div class="nav-wrapper container">
+
+        <a id="logo-container" href="<%= root_path %>" class="brand-logo">Scapes
+            <%= logo_img_tag %></a>
+        <a href="#" data-activates="nav-mobile" class="button-collapse">
+            <i class="material-icons">menu</i>
+        </a>
+        <ul class="right hide-on-med-and-down">
+            <% if user_signed_in? %>
+            
+            <% if team_invites.present? %>
+            <li>
+                <a href="#invites-modal"><i class="material-icons left">group_add</i>
+                    <span class="new badge green"><%= team_invites.count %></span>
+                </a>
+            </li>
+            <% end %>
+            <li>
+                <%= link_to '#!', class: 'dropdown-button', data: {activates: 'admin-dropdown'} do %>
+                <i class="material-icons left">settings</i>Configuration
+                <%= content_tag :i, "arrow_drop_down", class: "material-icons right arrow-toggle" %>
+                <% end %>
+            </li>
+            <li>
+                <%= link_to '#!', class: 'dropdown-button', data: {activates: 'account-dropdown'} do %>
+                <i class="material-icons left">account_circle</i>Account<%= content_tag :i, "arrow_drop_down", class: "material-icons right arrow-toggle" %>
+                <% end %>
+            </li>
+        <% else %>
+            <li>
+                <a href="<%= new_user_session_path %>">
+                    <i class="material-icons left">vpn_key</i>Sign In</a>
+            </li>
+            <li>
+                <a href="<%= new_user_registration_path %>">
+                    <i class="material-icons left">person_add</i>Sign Up</a>
+            </li>
+            <% end %>
+        </ul>
+        <ul id="nav-mobile" class="side-nav">
+            <li>
+                <a href="#">Navbar Link</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<ul id="admin-dropdown" class="dropdown-content">
+    <li>
+        <a href="<%= dashboard_path %>">Dashboard</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <a href="/admin">Admin Panel</a>
+    </li>
+</ul>
+
+<ul id="account-dropdown" class="dropdown-content">
+    <li>
+        <a href="<%= edit_user_registration_path %>">
+            <i class="material-icons left">format_align_left</i>My Account</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        <%= link_to destroy_user_session_path, method: :delete do %>
+        <i class="material-icons left">lock_outline</i>Sign Out
+        <% end %>
+    </li>
+</ul>
+
+<% if team_invites.present? %>
+<!-- Modal Structure -->
+<div id="invites-modal" class="modal bottom-sheet">
+    <div class="modal-content">
+        <h4>Team Invites</h4>
+        <ul class="collection">
+            <% team_invites.each do |invite| %>
+            <li class="collection-item avatar">
+                <i class="material-icons circle">user</i>
+                <span class="title">Team:
+                    <%= invite.team.name %></span>
+                <p>Sent by:
+                    <%= invite.sender.username %>
+                    <br>
+                    <%= invite.created_at.strftime("%A, %b #{invite.created_at.day.ordinalize}, %Y %l:%M %P") %>
+                </p>
+                <div class="secondary-content">
+                    <%= link_to accept_team_invite_path(team: invite.team), data: { confirm: "Are you sure? This will delete your current team and add you to the team that invited you as a regular user. This cannot be undone." }, method: :post do %>
+                    <i class="material-icons">check</i>
+                    <% end %>
+                    <%= link_to ignore_team_invite_path(team: invite.team), data: { confirm: "Are you sure?" }, method: :delete do %>
+                    <i class="material-icons">close</i>
+                    <% end %>
+                </div>
+            </li>
+            <% end %>
+        </ul>
+    </div>
+</div>
+<% end %>

@@ -1,0 +1,51 @@
+<section class="home-banner-section">
+    <div class="background-full" style="background-image:url(<%= asset_path('stuff.jpg') %>)">
+        <div class="background-overlay"></div>
+    </div>
+    
+    <div class="col s12 m10 offset-m1">
+        <div class="col s12 l6" id="index-banner">
+            <div class="banner section no-pad-bot left-text flow-text"></br>
+        </br>
+        <h2 class=" margin-remove" style="
+    color: #616161;">Scapes</h2>
+        <h1 class=" margin-remove dark-gray-text">Point of Sale</h1>
+        <div class="row">
+            <blockquote class="header col s12 light">
+                <div id="typed-strings">
+                    <p>A simple system manage your sales. For
+                        <strong>Free</strong>.
+                    </p>
+                    <p>
+                        No cost. No ads. No emails. No problem.
+                    </p>
+                </div>
+                <span class="typed" data-speed="0"></span>
+            </blockquote>
+        </div>
+    </div>
+</br>
+</div>
+
+<div class="col s12 l6">
+<div class="section valign-wrapper  padding-remove-bottom match-heights" data-align="index-banner">
+    <div class="col s12 valign center-align" style="margin-top:50px">
+        <% unless user_signed_in? %>
+          <a class="waves-effect waves-light btn-large margin-remove" href="<%= new_user_session_path %>">Sign In</a>&nbsp;&nbsp;&nbsp;
+          <a class="waves-effect waves-light btn-large light-blue lighten-2 margin-remove" href="<%= new_user_registration_path %>">Sign Up</a>
+        <% else %>
+          <% if user_has_team? %>
+          <a class="waves-effect waves-light btn-large margin-remove" href="<%= dashboard_path%>">Get Started</a>
+          <% end %>
+        <% end %>
+    </div>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="col s12 m10 offset-m1">
+<%= render partial: '/elements/features' %>
+</div>
+</section>

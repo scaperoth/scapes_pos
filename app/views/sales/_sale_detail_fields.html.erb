@@ -1,0 +1,22 @@
+<fieldset class="padding-remove-left sale-detail">
+    <div class="col s12 valign-wrapper padding-remove-left">
+        <%= f.fields_for :product do |ff| %>
+        <div class="col s4 field-input padding-remove-left" >
+            <%= ff.input :sku, input_html: {data: {search_url: sku_search_team_url }}, required: true %>
+        </div>
+        <% end %>
+
+        <div class="col s4 field-input padding-remove-left" >
+            <%= f.input :price, required: true %>
+        </div>
+        <div class="col s4 field-input">
+            <%= f.input :quantity, class: 'padli', required: true %>
+        </div>
+        <div class="col s4 valign">
+            <%= f.hidden_field :_destroy %>
+            <%= link_to '#', class: "remove_fields" do %>
+            <i class="material-icons red-text" style="vertical-align: middle;">close</i>
+            <% end %>
+        </div>
+    </div>
+</fieldset>

@@ -1,0 +1,1 @@
+json.array! @team_invites, partial: 'team_invites/team_invite', as: :team_invite

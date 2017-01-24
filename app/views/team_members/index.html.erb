@@ -1,0 +1,24 @@
+<p class="flow-text">Current Members</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>USERNAME</th>
+      <th>ADMIN</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @team_members.each do |team_member| %>
+      <tr>
+        <td><%= team_member.user.username %> </td>
+          <td><%= team_member.admin ? '<i class="material-icons left green-text">check</i>'.html_safe : '' %> </td>
+          <% if team_admin? || team_member == current_team_member %>
+        <td><%= render partial: 'elements/form_buttons', locals: {model: team_member, only_destroy: true} %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

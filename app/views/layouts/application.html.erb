@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ScapesPos</title>
+        <%= favicon_link_tag %>
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+        <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+        <%= csrf_meta_tags %>
+    </head>
+    <body>
+        <%= render partial: 'elements/nav' %>
+        <div class="flash-container col sm12 m4 offset-m4">
+            <%= display_flash %>
+        </div>
+
+        <div class="main-content row">
+          <% if homepage? %>
+              <%= yield %>
+          <% else %>
+            <div class="col s12 m8 offset-m2">
+                <%= yield %>
+            </div>
+          <% end %>
+        </div>
+        <footer class="page-footer grey">
+            <%= render partial: '/elements/footer' %>
+        </footer>
+
+    </body>
+</html>

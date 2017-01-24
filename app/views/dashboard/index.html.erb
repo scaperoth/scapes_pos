@@ -1,0 +1,108 @@
+<div class="dashboard ">
+    <div class="section row">
+
+        <div class="col s12 ">
+            
+            <div class="chip">
+                <%= link_to edit_user_registration_path do %>
+                <i class="material-icons" style="vertical-align: middle;">person</i><% end %>
+                <%= current_user.username %>
+            </div>
+            <div class="chip">
+                <%= link_to team_path do %>
+                <i class="material-icons" style="vertical-align: middle;">group</i>
+                <% end %>
+                <%= current_team.name %>
+            </div>
+                <% if active_event.present? %>
+                <div class="chip">
+                    <%= link_to team_events_path do %>
+                    <i class="material-icons" style="vertical-align: middle;">date_range</i><% end %>
+                    <%= active_event.name %>
+                </div>
+                <% end %>
+        </div>
+        
+        <% if active_event.present? %>
+        <!--   Icon Section   -->
+        <div class="col s12 m4 offset-m4 ">
+            <%= link_to new_team_event_sale_path active_event do %>
+            <div class="icon-block">
+                <h1 class="center light-blue-text margin-remove large-text-5">
+                    <i class="material-icons large">attach_money</i>
+                </h1>
+                <h3 class="center margin-remove">New Sale</h3>
+            </div>
+            <% end %>
+        </div>
+    <% else %>
+        <p class="flow-text center-align">
+            You have no events set up.
+            <%= link_to 'Create an event', new_team_event_path %>
+            now to start a sale.
+        </p>
+        <p class="center-align">Events are how we group sales together. An event may be for an hour, a week, a year, or forever. You can have many different events, but only one can be active at a time.</p>
+        <% end %>
+    </div>
+    <div class="divider row"></div>
+    <h3 class="flow-text">Configuration Options</h3>
+    <div class="section row">
+        <div class="col s12 l10 offset-l1">
+            <%= link_to team_event_sales_path active_event do %>
+            <div class="col s12 m3">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text">
+                        <i class="material-icons large">view_list</i>
+                    </h2>
+                    <h5 class="center">Sales</h5>
+                </div>
+            </div>
+            <% end %>
+            
+            <%= link_to team_categories_path do %>
+            <div class="col s12 m3">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text">
+                        <i class="material-icons large">label</i>
+                    </h2>
+                    <h5 class="center">Categories</h5>
+                </div>
+            </div>
+            <% end %>
+
+            <%= link_to team_products_path do %>
+            <div class="col s12 m3">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text">
+                        <i class="material-icons large">important_devices</i>
+                    </h2>
+                    <h5 class="center">Products</h5>
+
+                </div>
+            </div>
+            <% end %>
+
+            <%= link_to team_events_path do %>
+            <div class="col s12 m3">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text">
+                        <i class="material-icons large">flag</i>
+                    </h2>
+                    <h5 class="center">Events</h5>
+                </div>
+            </div>
+            <% end %>
+
+            <%= link_to team_path do %>
+            <div class="col s12 m3">
+                <div class="icon-block">
+                    <h2 class="center light-blue-text">
+                        <i class="material-icons large">people</i>
+                    </h2>
+                    <h5 class="center">Team</h5>
+                </div>
+            </div>
+            <% end %>
+        </div>
+    </div>
+</div>

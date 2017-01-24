@@ -1,0 +1,13 @@
+// Custom mixins for materialize
+
+@mixin rotate($deg: 90){
+    $sDeg: #{$deg}deg;
+
+    -webkit-transform: rotate($sDeg);
+    -moz-transform: rotate($sDeg);
+    -ms-transform: rotate($sDeg);
+    -o-transform: rotate($sDeg);
+    transform: rotate($sDeg);
+}
+
+.icon-rotate{  @include rotate(90)}

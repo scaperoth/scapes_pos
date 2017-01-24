@@ -1,0 +1,30 @@
+<h1>Listing products</h1>
+
+<table class="responsive no-wrap">
+    <thead>
+        <tr>
+            <th>SKU</th>
+            <th>DESC</th>
+            <th>PRICE</th>
+            <th>CATEGORY</th>
+            <th></th>
+        </tr>
+    </thead>  
+    <tbody>
+        <% @products.each do |product| %>
+
+        <tr>
+            <td><%= product.sku %></td>
+            <td><%= product.description %></td>
+            <td><%= number_to_currency product.price %></td>
+            <td><%= product.category.present? ? product.category : 'N/A' %></td>
+            <td><%= render partial: 'elements/form_buttons', locals: {model: product} %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<%= will_paginate @products %>
+<br>
+
+<%= link_to 'New Product', new_team_product_path %>

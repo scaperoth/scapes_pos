@@ -1,0 +1,18 @@
+<%= simple_form_for [current_team, @event] do |f| %>
+
+<div class="row">
+    <div class="input-field col s6">
+        <%= f.input :name, placeholder: 'Example event name', error: 'Name is already being used.', input_html: {class: 'validate'}, autofocus: true %>
+    </div>
+    <div class="input-field col s6">
+        <%= f.input :active, error: false, as: :boolean, boolean_style: :inline, input_html: {class: 'validate'}, label_html: {class: 'match-heights', data: {align: 'event_name'}} %>
+        <%= f.error :active, id: 'active_error' %>
+    </div>
+</div>
+
+<div class="row">
+    <div class="input-field">
+        <%= f.button :submit %>
+    </div>
+</div>
+<% end %>
