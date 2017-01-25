@@ -2,7 +2,7 @@ class Sale < ActiveRecord::Base
     belongs_to :customer
     belongs_to :event
     belongs_to :user
-    has_many :sale_details, inverse_of: :sale
+    has_many :sale_details
     has_many :products, through: :sale_details
     accepts_nested_attributes_for :sale_details, allow_destroy: true
     
@@ -12,7 +12,7 @@ class Sale < ActiveRecord::Base
  
   def amount_paid_cannot_be_less_than_total
     if amount_paid < total_all
-      errors.add(:missing_payment, "Amount paid must be greater than total!")
+      errors.add(:missing_payment, "Amount paid must be greater than or equal to total!")
     end
   end
   

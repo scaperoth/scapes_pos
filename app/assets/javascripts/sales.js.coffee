@@ -28,7 +28,7 @@ jQuery ->
                 $('.sale_sale_details_price input, .sale_sale_details_quantity input').on 'keyup', (event) ->
                     update_form_total()
                     $('#sale-amount-paid-field').change()
-                
+
             update_form_total = ->
                 total = 0.0
                 $('.sale-detail').each ->
@@ -38,7 +38,7 @@ jQuery ->
                 total = total.toFixed(2)
                 $('#sale-total').text(total)
                 $('#sale-amount-paid-field').change()
-                
+
             calculate_form_change = ->
                 sub_total = parseFloat($('#sale-total').text())
                 amount_paid = parseFloat($('#sale-amount-paid-field').val())
@@ -76,17 +76,17 @@ jQuery ->
 
             $('#sale-amount-paid-field').on 'change', (event) ->
                 calculate_form_change()
-                
+
             $('#sale-amount-paid-field').on 'keyup', (event) ->
                 $('#sale-amount-paid-field').change()
-                
-            if !$('.sale_sale_details_price').length 
-              # add a new field right off the bat            
-              add_field $('form .add_fields')
+
+            if !$('.sale_sale_details_price input').length 
+                # add a new field right off the bat            
+                add_field $('form .add_fields')
             else
-              field_focus()
-              $('select').material_select();
-              update_form_total()
+                field_focus()
+                $('select').material_select();
+                update_form_total()
 
 
 

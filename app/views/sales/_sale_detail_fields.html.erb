@@ -2,7 +2,7 @@
     <div class="col s12 valign-wrapper padding-remove-left">
         <%= f.simple_fields_for :product do |product_form| %>
         <div class="col s4 field-input padding-remove-left" >
-            <%= product_form.input :sku, input_html: {data: {search_url: sku_search_team_url }} %>
+            <%= product_form.input :sku, input_html: {data: {search_url: sku_search_team_url }}, required: true %>
         </div>  
         <% end %>
 

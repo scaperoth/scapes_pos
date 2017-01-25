@@ -83,8 +83,8 @@ class SalesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sale_params
-        form_params = params.require(:sale).permit(:customer, :amount_paid, :change, sale_details_attributes: [:id, :quantity, :total, :_destroy, :price, product_attributes: [:sku]])
-
+        form_params = params.require(:sale).permit(:customer, :amount_paid, :change, sale_details_attributes: [:id, :quantity, :total, :_destroy, :price, product_attributes:[:sku]])
+      
         if form_params[:sale_details_attributes].present?
             # here we will create a product if we need to because
             # we want the user to be able to, on-the-fly, create their
@@ -95,17 +95,17 @@ class SalesController < ApplicationController
                 # get the product information from the form 
                 product = v[:product_attributes]
                 product[:price] = form_params[:sale_details_attributes]
-
+      
                 # delete the product from the sale_detail
-                form_params[:sale_details_attributes][k].delete :product
-
+                form_params[:sale_details_attributes][k].delete :product_attributes
+      
                 # add the product information to the product attributes param
                 new_product = Product.find_or_create_by(sku: product[:sku], team: current_team)
-
+      
                 # if the price is nil, let's use the user input
                 new_product.price = product[:price] if new_product.price.nil?
                 new_product.save # save changes
-
+      
                 # add a product reference for the new/existing product we got
                 form_params[:sale_details_attributes][k][:product_id] = new_product.id
             end
