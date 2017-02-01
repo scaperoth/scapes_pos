@@ -2,7 +2,7 @@
 
 <div class="row ">
     <div class="section">
-        <%= simple_form_for [current_team, active_event, @sale] do |f| %>
+        <%= simple_form_for [active_event, @sale], url: team_event_sale_path do |f| %>
         <%= f.error_notification %>
 
         <div class="col s12 m6">
@@ -70,6 +70,7 @@
                     <th data-field="quantity">QTY</th>
                     <th data-field="total">ITEM TOTAL</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -83,7 +84,8 @@
                     <td><%= number_to_currency sd.product.price %></td>
                     <td><%= sd.quantity %></td>
                     <td><%= number_to_currency sd.total %></td>
-
+                    <!-- <td><%= link_to  team_sale_detail_url(sd.id), method: :delete, data: { confirm: 'Are you sure?' } do%>
+                    <i class="material-icons left red-text">delete</i><% end %></td> -->
                 </tr>
                 <% end %>
             </tbody>

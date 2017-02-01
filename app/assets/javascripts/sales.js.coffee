@@ -4,7 +4,7 @@
 
 jQuery ->
     $(document).on 'turbolinks:load', ->
-        if $('#new_sale, .edit_sale').length > 0 
+        if $('#new_sale').length > 0 
             bind_sku_field = (elem) -> 
                 $(elem).on 'focusout', (event) ->
                     elem = $(this)

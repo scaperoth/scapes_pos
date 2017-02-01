@@ -83,8 +83,7 @@ class SalesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sale_params
-        form_params = params.require(:sale).permit(:customer, :amount_paid, :change, sale_details_attributes: [:id, :quantity, :total, :_destroy, :price, product_attributes:[:sku]])
-      
+        form_params = params.require(:sale).permit(:id, :customer, :amount_paid, :change, sale_details_attributes: [:id, :quantity, :total, :_destroy, :price, product_attributes:[:sku]])
         if form_params[:sale_details_attributes].present?
             # here we will create a product if we need to because
             # we want the user to be able to, on-the-fly, create their
