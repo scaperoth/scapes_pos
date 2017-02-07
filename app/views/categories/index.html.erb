@@ -5,6 +5,7 @@
         <tr>
             <th>NAME</th>
             <th>SEARCH TERM</th>
+            <th>PRODUCTS</th>
             <th>PRICE</th>
         </tr>
     </thead>
@@ -17,6 +18,9 @@
             </td>
             <td>
                 <%= category.search_term %>
+            </td>
+            <td>
+                <%= category.products_list %>
             </td>
             <td>
                 <%= number_to_currency category.price %>

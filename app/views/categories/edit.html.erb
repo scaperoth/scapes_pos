@@ -1,6 +1,6 @@
 <h1>Editing category</h1>
-
-<%= render 'form' %>
-
+<%= simple_form_for [current_team, @category], url: team_category_path(@category)  do |f| %>
+<%= render 'form', f: f %>
+<% end %>
 <%= link_to 'Show', team_category_path %> |
 <%= link_to 'Back', team_categories_path %>

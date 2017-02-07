@@ -54,7 +54,7 @@ ready = function() {
         $('select').material_select();
         
         // initialize labels
-        $('input').each(function(){
+        $('input, textarea').each(function(){
           if($(this).val().length>0){
             console.log()
             $('label[for='+$(this).attr('id')+']').addClass('active')

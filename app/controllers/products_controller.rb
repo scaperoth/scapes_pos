@@ -71,8 +71,8 @@ class ProductsController < ApplicationController
             return_hash = @product.as_json
             product_category = @product.category
             return_hash[:price] = product_category.price if product_category.present?
-            format.html { render json: @product, status: :ok }
-            format.json { render json: @product, status: :ok }
+            format.html { render json: return_hash, status: :ok }
+            format.json { render json: return_hash, status: :ok }
           else
             format.html { render json: {}, status: :ok }
             format.json { render json: {}, status: :ok }
